@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guest</title>
+  <link rel="stylesheet" href="output.css">
+  <script src="https://cdn.tailwindcss.com"></script> <!-- Added Tailwind -->
+</head>
+<body class="bg-gradient-to-br from-purple-700 to-blue-400 min-h-screen flex flex-col items-center justify-center p-4">
+
+  <div class="w-full max-w-md bg-white p-6 rounded-2xl shadow-lg mb-8">
+    <div class="text-center mb-6">
+      <h2 class="text-2xl font-bold text-gray-800">Login As a Guest</h2>
+    </div>
+    <div class="flex justify-around gap-2 mb-4">
+      <button type="button" class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-xl transition" onclick="about()">ABOUT</button>
+      <button type="button" class="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-xl transition" onclick="register()">SIGNUP</button>
+      <button type="button" class="px-4 py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-xl transition" onclick="home()">HOME</button>
+    </div>
+  </div>
+
+  <div class="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg">
+    <h2 class="text-2xl font-bold text-center mb-6 text-gray-800">Login As a Guest</h2>
+    <form class="space-y-5">
+      
+      <div class="flex flex-col">
+        <label for="name" class="text-gray-700 mb-1 font-medium">Name:</label>
+        <input type="text" name="name" id="name" class="border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" required>
+      </div>
+
+      <div class="flex flex-col">
+        <label for="email" class="text-gray-700 mb-1 font-medium">E-mail:</label>
+        <input type="email" name="email" id="email" class="border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" required>
+      </div>
+
+      <div class="flex justify-center">
+        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded-lg transition">Log In As Guest</button>
+      </div>
+
+      <div class="text-center mt-4 text-gray-600">
+        <b>If you want full access,</b> <a href="register.html" class="text-blue-500 hover:underline">Register here</a>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    function about(){
+        window.location.href = "about.html";
+    }
+    function register(){
+        window.location.href = "register.html";
+    }
+    function home(){
+        window.location.href = "index.html";
+    }
+  </script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      document.querySelector("form").addEventListener("submit", function(event) {
+        event.preventDefault(); 
+        
+        let name = document.getElementById("name").value.trim();
+        let email = document.getElementById("email").value.trim();
+
+        if (name === "" || email === "") {
+          alert("Please fill in all fields.");
+          return;
+        }
+
+        localStorage.setItem("guestName", name);
+        localStorage.setItem("guestEmail", email);
+        localStorage.setItem("fileUploaded", "false");
+        localStorage.setItem("fileViewed", "false");
+
+        alert("Welcome, " + name + "! You are logged in as a guest.");
+        
+        window.location.href = "manage.html";
+      });
+    });
+  </script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      let guestForm = document.querySelector(".max-w-md:last-child");
+      guestForm.style.opacity = "0";
+      guestForm.style.transform = "translateY(50px)";
+      guestForm.style.transition = "opacity 0.5s ease-out, transform 0.5s ease-out";
+      
+      setTimeout(() => {
+        guestForm.style.opacity = "1";
+        guestForm.style.transform = "translateY(0)";
+      }, 100);
+    });
+  </script>
+
+</body>
+</html>

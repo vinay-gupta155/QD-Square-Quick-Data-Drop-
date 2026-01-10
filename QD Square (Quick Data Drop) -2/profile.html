@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile</title>
+  <link rel="stylesheet" href="output.css">
+  <script src="https://cdn.tailwindcss.com"></script> <!-- Tailwind CDN -->
+</head>
+<body class="bg-gradient-to-br from-purple-700 to-blue-400 min-h-screen flex flex-col items-center py-10 space-y-10">
+
+  <!-- Top Navbar -->
+  <div class="bg-white bg-opacity-90 p-6 rounded-xl shadow-2xl flex flex-col items-center space-y-6 w-11/12 max-w-md">
+    <h2 class="text-2xl font-bold text-gray-800">Profile</h2>
+    <div class="flex flex-wrap justify-center gap-4">
+      <button onclick="home()" class="px-6 py-2 bg-blue-600 hover:bg-cyan-400 text-white rounded-xl shadow-md transition font-semibold">Home</button>
+      <button onclick="manage()" class="px-6 py-2 bg-blue-600 hover:bg-cyan-400 text-white rounded-xl shadow-md transition font-semibold">Upload & Manage files</button>
+    </div>
+  </div>
+
+  <!-- Profile Card -->
+  <div class="bg-white bg-opacity-90 p-8 rounded-2xl shadow-2xl w-11/12 max-w-md flex flex-col items-center space-y-4">
+    <h2 class="text-2xl font-bold text-gray-800 mb-4">Profile</h2>
+    <img src="logo1.jpg" alt="Profile Picture" class="w-24 h-24 rounded-full shadow-md object-cover" />
+    <div class="text-gray-700 text-center space-y-2">
+      <p><span class="font-semibold">Name:</span> Michel</p>
+      <p><span class="font-semibold">DOB:</span> 02-11-2001</p>
+      <p><span class="font-semibold">Mobile:</span> XXXXXXX096</p>
+      <p><span class="font-semibold">E-mail:</span> john@gmail.com</p>
+    </div>
+    <button id="logout-btn" class="mt-4 px-6 py-2 bg-red-500 hover:bg-red-700 text-white rounded-xl shadow-md transition font-semibold">Logout</button>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    function home() {
+      window.location.href = "home.html";
+    }
+    function manage() {
+      window.location.href = "p.html";
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+      document.getElementById("logout-btn").addEventListener("click", function(event) {
+        event.preventDefault();
+        let confirmLogout = confirm("Are you sure you want to logout?");
+        if (confirmLogout) {
+          localStorage.removeItem("user");
+          sessionStorage.removeItem("user");
+          window.location.href = "index.html";
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

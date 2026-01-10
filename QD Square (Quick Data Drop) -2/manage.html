@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="script.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Manager</title>
+    <link rel="stylesheet" href="output.css">
+    <script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script> <!-- Tailwind CDN -->
+    <style>
+        body {
+            height: 1000vh;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-purple-600 to-blue-400 p-8 flex flex-col items-center">
+
+    <div class="w-full max-w-4xl bg-white p-8 rounded-lg shadow-xl mb-8">
+        <h1 class="text-3xl font-semibold text-center text-gray-800">File Manager</h1>
+        <div class="flex justify-center space-x-4 mt-6">
+            <button class="bg-blue-600 hover:bg-blue-500 text-white font-semibold py-2 px-6 rounded-lg shadow-md" onclick="home()">Home</button>
+            <button class="bg-blue-600 hover:bg-blue-500 text-white font-semibold py-2 px-6 rounded-lg shadow-md" onclick="profile()">Profile</button>
+        </div>
+    </div>
+
+    <div class="bg-white p-8 rounded-lg shadow-xl w-full max-w-4xl">
+        <div class="mb-8">
+            <h2 class="text-2xl font-semibold text-gray-800">Upload a File</h2>
+            <input type="hidden" id="uploadcare-widget" role="uploadcare-uploader" data-public-key="27c4bc0538338ed619c9">
+            <button class="mt-4 bg-blue-600 hover:bg-cyan-400 text-white font-semibold py-2 px-6 rounded-lg shadow-md" onclick="uploadFile()">Upload</button>
+        </div>
+
+        <div>
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Stored Files</h2>
+            <ul id="fileList" class="space-y-4"></ul>
+            <div id="fileContainer" class="mt-8"></div>
+        </div>
+    </div>
+
+    <script>
+        function home() {
+            window.location.href = "home.html";
+        }
+        function profile() {
+            window.location.href = "profile.html";
+        }
+
+        let widget = uploadcare.Widget("#uploadcare-widget");
+        widget.onChange(function(file) {
+            if (file) {
+                file.done(function(info) {
+                    let fileName = info.name;
+                    let fileUrl = info.cdnUrl;
+                    localStorage.setItem(fileName, fileUrl);
+                    alert("File uploaded successfully!");
+                    loadFiles();
+                });
+            }
+        });
+
+        function loadFiles() {
+            let fileList = document.getElementById("fileList");
+            fileList.innerHTML = "";
+            for (let i = 0; i < localStorage.length; i++) {
+                let fileName = localStorage.key(i);
+                let fileUrl = localStorage.getItem(fileName);
+                if (!fileUrl) continue;
+
+                let li = document.createElement("li");
+                li.classList.add("flex", "justify-between", "items-center", "p-4", "border", "border-gray-300", "rounded-lg", "shadow-sm");
+
+                li.innerHTML = `<strong class="text-lg text-gray-700">${fileName}</strong>`;
+                
+                let viewBtn = document.createElement("button");
+                viewBtn.classList.add("bg-green-600", "hover:bg-green-500", "text-white", "py-2", "px-4", "rounded-lg", "shadow-md", "mr-2");
+                viewBtn.textContent = "View";
+                viewBtn.onclick = function () { viewFile(fileName, fileUrl); };
+
+                let deleteBtn = document.createElement("button");
+                deleteBtn.classList.add("bg-red-600", "hover:bg-red-500", "text-white", "py-2", "px-4", "rounded-lg", "shadow-md", "mr-2");
+                deleteBtn.textContent = "Delete";
+                deleteBtn.onclick = function () {
+                    localStorage.removeItem(fileName);
+                    loadFiles();
+                    document.getElementById("fileContainer").innerHTML = "";
+                };
+
+                let downloadBtn = document.createElement("button");
+                downloadBtn.classList.add("bg-blue-600", "hover:bg-blue-500", "text-white", "py-2", "px-4", "rounded-lg", "shadow-md");
+                downloadBtn.textContent = "Download";
+                downloadBtn.onclick = function () {
+                    let link = document.createElement("a");
+                    link.href = fileUrl;
+                    link.download = fileName;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                };
+
+                li.appendChild(viewBtn);
+                li.appendChild(deleteBtn);
+                li.appendChild(downloadBtn);
+                fileList.appendChild(li);
+            }
+        }
+
+        function viewFile(fileName, fileUrl) {
+            let fileContainer = document.getElementById("fileContainer");
+            fileContainer.innerHTML = `<h2 class="text-xl font-semibold text-gray-800 mb-4">Preview: ${fileName}</h2>`;
+
+            let fileType = fileName.split('.').pop().toLowerCase();
+            let element;
+
+            if (["png", "jpg", "jpeg", "gif", "bmp"].includes(fileType)) {
+                element = document.createElement("img");
+                element.classList.add("w-full", "max-w-lg", "mx-auto");
+                element.src = fileUrl;
+            } else if (["mp4", "webm", "ogg"].includes(fileType)) {
+                element = document.createElement("video");
+                element.classList.add("w-full", "max-w-lg", "mx-auto");
+                element.controls = true;
+                element.src = fileUrl;
+            } else if (["mp3", "wav", "ogg"].includes(fileType)) {
+                element = document.createElement("audio");
+                element.classList.add("w-full", "max-w-lg", "mx-auto");
+                element.controls = true;
+                element.src = fileUrl;
+            } else if (fileType === "pdf") {
+                element = document.createElement("iframe");
+                element.classList.add("w-full", "h-96");
+                element.src = fileUrl;
+            } else {
+                element = document.createElement("a");
+                element.classList.add("text-blue-600", "hover:underline");
+                element.href = fileUrl;
+                element.textContent = "Download File";
+                element.download = fileName;
+            }
+
+            fileContainer.appendChild(element);
+        }
+
+        window.onload = loadFiles;
+    </script>
+</body>
+</html>

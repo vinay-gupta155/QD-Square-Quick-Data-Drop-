@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <link rel="stylesheet" href="output.css">
+</head>
+<body class="bg-gradient-to-br from-purple-700 to-blue-400 min-h-screen flex flex-col items-center justify-center p-4">
+
+    <div class="w-full max-w-4xl bg-white p-6 rounded-2xl shadow-lg mb-8 ">
+        <div class="text-center mb-6">
+            <h2 class="text-3xl font-bold text-gray-800">Contact Us</h2>
+        </div>
+
+        <div class="flex flex-wrap justify-center gap-4 mb-6">
+            <button type="button" onclick="about()" class="px-6 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-xl transition">ABOUT</button>
+            <button type="button" onclick="login()" class="px-6 py-2 bg-green-500 hover:bg-green-600 text-white rounded-xl transition">LOGIN</button>
+            <button type="button" onclick="register()" class="px-6 py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-xl transition">SIGNUP</button>
+            <button type="button" onclick="home()" class="px-6 py-2 bg-red-500 hover:bg-red-600 text-white rounded-xl transition">HOME</button>
+        </div>
+    </div>
+
+    <div class="w-full max-w-2xl bg-white p-8 rounded-2xl shadow-lg">
+        <form class="space-y-6 contact-form">
+            <div class="text-center">
+                <h2 class="text-3xl font-bold text-gray-800 ">CONTACT US</h2>
+            </div>
+
+            <div class="flex flex-col">
+                <label for="Name" class="mb-2 font-medium text-gray-600">Name:</label>
+                <input type="text" id="Name" class="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
+            </div>
+
+            <div class="flex flex-col">
+                <label for="email" class="mb-2 font-medium text-gray-600">Email:</label>
+                <input type="email" id="email" class="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
+            </div>
+
+            <div class="flex flex-col">
+                <label for="subject" class="mb-2 font-medium text-gray-600">Subject:</label>
+                <input type="text" id="subject" class="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
+            </div>
+
+            <div class="flex flex-col">
+                <label for="message" class="mb-2 font-medium text-gray-600">Message:</label>
+                <textarea id="message" rows="4" class="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"></textarea>
+            </div>
+
+            <div class="text-center">
+                <button type="submit" id="submit" name="submit" class="mt-4 px-8 py-3 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-xl transition">
+                    Submit
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function about() {
+            window.location.href = "about.html";
+        }
+        function login() {
+            window.location.href = "login.html";
+        }
+        function register() {
+            window.location.href = "register.html";
+        }
+        function home() {
+            window.location.href = "index.html";
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelector(".contact-form").addEventListener("submit", function(event) {
+                event.preventDefault(); // Prevent default form submission
+                
+                let name = document.getElementById("Name").value.trim();
+                let email = document.getElementById("email").value.trim();
+                let subject = document.getElementById("subject").value.trim();
+                let message = document.getElementById("message").value.trim();
+
+                if (name === "" || email === "" || subject === "" || message === "") {
+                    alert("Please fill in all fields.");
+                    return;
+                }
+
+                alert("Thank you for contacting us, " + name + "!");
+
+                setTimeout(function() {
+                    window.location.href = "index.html";
+                }, 1000);
+            });
+
+            // Animation
+            let contactForm = document.querySelector(".contact-form");
+            contactForm.style.opacity = "0";
+            contactForm.style.transform = "translateY(50px)";
+            contactForm.style.transition = "opacity 0.5s ease-out, transform 0.5s ease-out";
+
+            setTimeout(() => {
+                contactForm.style.opacity = "1";
+                contactForm.style.transform = "translateY(0)";
+            }, 100);
+        });
+    </script>
+</body>
+</html>

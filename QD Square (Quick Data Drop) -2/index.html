@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vinay</title>
+  <link rel="stylesheet" href="output.css">
+  <script src="https://cdn.tailwindcss.com"></script> <!-- Tailwind added -->
+</head>
+<body class="bg-gradient-to-br from-purple-700 to-blue-400 min-h-screen flex flex-col items-center justify-center space-y-8 relative">
+
+  <div class="flex flex-col items-center bg-white bg-opacity-90 p-8 rounded-2xl shadow-2xl space-y-6 border-2 border-gray-600">
+    <div>
+      <img src="logo1.jpg" alt="logo" id="logo" class="w-24 h-24 object-cover rounded-full shadow-md" />
+    </div>
+
+    <div class="flex flex-wrap justify-center gap-4">
+      <button onclick="about()" class="px-6 py-2 bg-blue-600 hover:bg-cyan-400 text-white rounded-xl shadow transition font-semibold">ABOUT</button>
+      <button onclick="login()" class="px-6 py-2 bg-blue-600 hover:bg-cyan-400 text-white rounded-xl shadow transition font-semibold">LOGIN</button>
+      <button onclick="register()" class="px-6 py-2 bg-blue-600 hover:bg-cyan-400 text-white rounded-xl shadow transition font-semibold">SIGNUP</button>
+      <button onclick="guest()" class="px-6 py-2 bg-blue-600 hover:bg-cyan-400 text-white rounded-xl shadow transition font-semibold">GUEST</button>
+      <button onclick="contactus()" class="px-6 py-2 bg-blue-600 hover:bg-cyan-400 text-white rounded-xl shadow transition font-semibold">CONTACT US</button>
+    </div>
+  </div>
+
+
+  <div class="flex flex-col items-center mt-6">
+    <i class="text-white  font-semibold text-lg text-bold mb-2">"Do you want to experience web storage then,"</i>
+    <button onclick="register()" class="px-6 py-2 bg-blue-700 hover:bg-cyan-400 text-white rounded-xl shadow transition font-semibold border-2 border-gray-600">GET STARTED</button>
+
+  </div>
+
+  <script>
+    function about() {
+      window.location.href = "about.html";
+    }
+    function login() {
+      window.location.href = "login.html";
+    }
+    function register() {
+      window.location.href = "register.html";
+    }
+    function guest() {
+      window.location.href = "guest.html";
+    }
+    function contactus() {
+      window.location.href = "contactus.html";
+    }
+  </script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      // Animation for logo
+      let logo = document.getElementById("logo");
+      logo.style.opacity = "0";
+      logo.style.transform = "translateX(-50px)";
+      logo.style.transition = "opacity 0.5s ease-out, transform 0.5s ease-out";
+
+      setTimeout(() => {
+        logo.style.opacity = "1";
+        logo.style.transform = "translateX(0)";
+      }, 100);
+
+      // Animation for logo1
+      let logo1 = document.getElementById("logo1");
+      logo1.style.opacity = "0";
+      logo1.style.transform = "translateY(-50px)";
+      logo1.style.transition = "opacity 0.5s ease-out, transform 0.5s ease-out";
+
+      setTimeout(() => {
+        logo1.style.opacity = "1";
+        logo1.style.transform = "translateY(0)";
+      }, 100);
+    });
+  </script>
+
+</body>
+</html>
